@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ArquiTech Solutions - Manufactura de Precisión</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#0a0e1a;--card:#111827;--green:#4ade80;--blue:#60a5fa;--text:#e2e8f0;--accent:linear-gradient(135deg,#22c55e,#3b82f6);--radius:12px}html{scroll-behavior:smooth}body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+.loader{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}.loader span{font-size:1.5rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 5px rgba(74,222,128,.4)}50%{box-shadow:0 0 20px rgba(74,222,128,.8)}}
+@keyframes countUp{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
+nav{position:fixed;top:0;width:100%;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);z-index:1000;border-bottom:1px solid rgba(74,222,128,.1);padding:0 2rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:65px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.2rem;text-decoration:none;color:var(--text)}
+.logo svg{width:40px;height:40px}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .3s;position:relative}
+.nav-links a:hover{color:var(--green)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--green);transition:width .3s}.nav-links a:hover::after{width:100%}
+.menu-btn{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(34,197,94,.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(59,130,246,.08) 0%,transparent 60%)}
+.hero-content{max-width:800px;position:relative;z-index:1;animation:fadeIn 1s ease-out}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);border-radius:50px;padding:8px 20px;font-size:.85rem;color:var(--green);margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;margin-bottom:1rem;line-height:1.1}
+.hero h1 span{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.15rem;color:#94a3b8;max-width:600px;margin:0 auto 2rem}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius);font-weight:700;font-size:1rem;text-decoration:none;transition:transform .3s,box-shadow .3s;cursor:pointer;border:none}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 20px rgba(34,197,94,.3)}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 6px 30px rgba(34,197,94,.5)}
+.btn-secondary{background:transparent;color:var(--text);border:2px solid rgba(74,222,128,.3)}.btn-secondary:hover{border-color:var(--green);transform:scale(1.05)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.5rem;max-width:800px;margin:3rem auto 0}
+.stat{text-align:center;padding:1.5rem;background:rgba(17,24,39,.6);border-radius:var(--radius);border:1px solid rgba(74,222,128,.1);animation:countUp .8s ease-out}
+.stat-num{font-size:2rem;font-weight:900;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.8rem;color:#64748b;margin-top:.25rem}
+section{padding:80px 2rem}.section-title{text-align:center;margin-bottom:3rem}
+.section-title h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;margin-bottom:.5rem}
+.section-title h2 span{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section-title p{color:#64748b;max-width:600px;margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;max-width:1200px;margin:0 auto}
+.service-card{background:var(--card);border-radius:var(--radius);padding:2rem;border:1px solid rgba(74,222,128,.08);transition:transform .4s,box-shadow .4s,border-color .4s;position:relative;overflow:hidden}
+.service-card:hover{transform:translateY(-8px) rotateX(2deg);box-shadow:0 20px 40px rgba(0,0,0,.3);border-color:rgba(74,222,128,.3)}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);transform:scaleX(0);transition:transform .4s;transform-origin:left}.service-card:hover::before{transform:scaleX(1)}
+.service-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+.service-card h3{font-size:1.2rem;margin-bottom:.5rem;color:#fff}
+.service-card p{color:#94a3b8;font-size:.9rem}
+.service-tag{display:inline-block;background:rgba(74,222,128,.1);color:var(--green);padding:4px 12px;border-radius:20px;font-size:.75rem;margin-top:1rem}
+.process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;max-width:1000px;margin:0 auto}
+.process-step{text-align:center;padding:2rem 1.5rem;background:var(--card);border-radius:var(--radius);border:1px solid rgba(74,222,128,.08);position:relative;transition:transform .3s}
+.process-step:hover{transform:translateY(-5px)}
+.step-num{width:50px;height:50px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.2rem;color:#fff;margin:0 auto 1rem}
+.process-step h3{margin-bottom:.5rem;color:#fff}
+.process-step p{color:#94a3b8;font-size:.85rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:1200px;margin:0 auto}
+.price-card{background:var(--card);border-radius:var(--radius);padding:2rem;border:1px solid rgba(74,222,128,.08);text-align:center;transition:transform .4s,box-shadow .4s}
+.price-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.price-card.featured{border-color:rgba(74,222,128,.4);position:relative}
+.price-card.featured::after{content:'Popular';position:absolute;top:12px;right:12px;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700}
+.price-icon{font-size:2.5rem;margin-bottom:.5rem}
+.price-card h3{font-size:1.1rem;color:#fff;margin-bottom:.5rem}
+.price-card .price{font-size:2.2rem;font-weight:900;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:.5rem 0}
+.price-card .price-note{font-size:.8rem;color:#64748b;margin-bottom:1rem}
+.price-card .price-desc{color:#94a3b8;font-size:.85rem;margin-bottom:1.5rem}
+.price-card .btn{width:100%;justify-content:center}
+.about-content{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;align-items:center}
+.about-text h3{font-size:1.4rem;color:#fff;margin-bottom:1rem}
+.about-text p{color:#94a3b8;margin-bottom:1rem;font-size:.95rem}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.value-item{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(17,24,39,.6);border-radius:10px;border:1px solid rgba(74,222,128,.08)}
+.value-item span:first-child{font-size:1.5rem}
+.value-item div{font-size:.85rem;color:#94a3b8}
+.about-visual{display:flex;flex-direction:column;gap:1rem}
+.about-card{background:var(--card);padding:1.5rem;border-radius:var(--radius);border:1px solid rgba(74,222,128,.08);transition:transform .3s}
+.about-card:hover{transform:scale(1.02)}
+.about-card h4{color:var(--green);font-size:.9rem;margin-bottom:.25rem}
+.about-card p{color:#94a3b8;font-size:.85rem}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:1000px;margin:0 auto}
+.team-card{background:var(--card);border-radius:var(--radius);padding:2rem;text-align:center;border:1px solid rgba(74,222,128,.08);transition:transform .4s}
+.team-card:hover{transform:translateY(-5px) rotateY(3deg)}
+.team-avatar{width:80px;height:80px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1rem;color:#fff}
+.team-card h3{color:#fff;font-size:1rem;margin-bottom:.25rem}
+.team-card .role{color:var(--green);font-size:.8rem;margin-bottom:.5rem}
+.team-card p{color:#94a3b8;font-size:.8rem}
+.faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.faq-item{background:var(--card);border-radius:var(--radius);border:1px solid rgba(74,222,128,.08);overflow:hidden}
+.faq-q{padding:1.2rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#fff;font-weight:600;transition:background .3s}
+.faq-q:hover{background:rgba(74,222,128,.05)}
+.faq-q .arrow{transition:transform .3s;color:var(--green)}
+.faq-item.active .faq-q .arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s;padding:0 1.5rem;color:#94a3b8;font-size:.9rem}
+.faq-item.active .faq-a{max-height:200px;padding:0 1.5rem 1.2rem}
+.location-content{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.location-info{display:flex;flex-direction:column;gap:1.5rem}
+.loc-item{display:flex;gap:15px;align-items:flex-start;padding:1rem;background:var(--card);border-radius:var(--radius);border:1px solid rgba(74,222,128,.08)}
+.loc-icon{font-size:1.5rem;min-width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(74,222,128,.1);border-radius:10px}
+.loc-item h4{color:#fff;font-size:.95rem;margin-bottom:.25rem}
+.loc-item p{color:#94a3b8;font-size:.85rem}
+.map-container{border-radius:var(--radius);overflow:hidden;border:1px solid rgba(74,222,128,.15);min-height:350px}
+.map-container iframe{width:100%;height:100%;min-height:350px;border:none}
+footer{background:rgba(17,24,39,.5);border-top:1px solid rgba(74,222,128,.1);padding:3rem 2rem 1.5rem;margin-top:2rem}
+.footer-inner{max-width:1200px;margin:0 auto;text-align:center}
+.footer-inner p{color:#64748b;font-size:.85rem;margin-top:1rem}
+.footer-links{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:1rem}
+.footer-links a{color:#94a3b8;text-decoration:none;font-size:.9rem;transition:color .3s}.footer-links a:hover{color:var(--green)}
+.fab{position:fixed;bottom:28px;right:28px;width:60px;height:60px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;text-decoration:none;box-shadow:0 4px 20px rgba(34,197,94,.4);z-index:999;animation:glow 2s infinite;transition:transform .3s}.fab:hover{transform:scale(1.15)}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.nav-links{display:none;position:absolute;top:65px;left:0;right:0;background:rgba(10,14,26,.98);flex-direction:column;padding:1.5rem;gap:1rem;border-bottom:1px solid rgba(74,222,128,.1)}.nav-links.open{display:flex}.menu-btn{display:block}.hero h1{font-size:2rem}.hero-btns{flex-direction:column;align-items:center}.services-grid,.pricing-grid{grid-template-columns:1fr}.about-values{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="loader" id="loader"><span>Cargando ArquiTech...</span></div>
+<nav>
+<div class="nav-inner">
+<a href="#" class="logo">
+<svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="url(#lg)"/><path d="M12 28L20 12L28 28H12Z" stroke="#fff" stroke-width="2.5" fill="none"/><circle cx="20" cy="22" r="3" fill="#fff"/><defs><linearGradient id="lg" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs></svg>
+ARQUITECH
+</a>
+<button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+<ul class="nav-links">
+<li><a href="#servicios">Servicios</a></li>
+<li><a href="#proceso">Proceso</a></li>
+<li><a href="#tarifas">Tarifas</a></li>
+<li><a href="#nosotros">Nosotros</a></li>
+<li><a href="#equipo">Equipo</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#ubicacion">Ubicación</a></li>
+</ul>
+</div>
+</nav>
+<section class="hero" id="inicio">
+<div class="hero-content">
+<div class="hero-badge">⚡ +15 Años de Experiencia · 500+ Proyectos · Panamá</div>
+<h1>Manufactura de <span>Precisión</span></h1>
+<p>Soluciones integrales en corte CNC, fabricación metálica, diseño arquitectónico, taller mecánico de camiones y alquiler de equipo pesado en Panamá.</p>
+<div class="hero-btns">
+<a href="https://wa.me/50766862852?text=Hola%20ArquiTech%2C%20estoy%20interesado%20en%20sus%20servicios.%20Quisiera%20solicitar%20una%20cotizaci%C3%B3n." class="btn btn-primary" target="_blank">📱 Solicitar Cotización</a>
+<a href="#tarifas" class="btn btn-secondary">💰 Ver Tarifas 2026</a>
+</div>
+<div class="stats">
+<div class="stat"><div class="stat-num" data-target="15">0</div><div class="stat-label">Años Experiencia</div></div>
+<div class="stat"><div class="stat-num" data-target="500">0</div><div class="stat-label">Proyectos</div></div>
+<div class="stat"><div class="stat-num" data-target="98">0</div><div class="stat-label">% Satisfacción</div></div>
+<div class="stat"><div class="stat-num" data-target="24">0</div><div class="stat-label">Soporte 24/7</div></div>
+</div>
+</div>
+</section>
+<section id="servicios" class="reveal">
+<div class="section-title">
+<h2>🔧 Nuestros <span>Servicios</span></h2>
+<p>Tecnología CNC de última generación combinada con artesanía experta y más de 15 años de experiencia.</p>
+</div>
+<div class="services-grid">
+<div class="service-card">
+<span class="service-icon">✂️</span>
+<h3>Corte CNC</h3>
+<p>Láser, plasma y router en metales, maderas y acrílicos con tolerancias militares de ±0.1mm.</p>
+<span class="service-tag">Alta Precisión</span>
+</div>
+<div class="service-card">
+<span class="service-icon">⚙️</span>
+<h3>Fabricación Metálica</h3>
+<p>Soldadura TIG/MIG certificada AWS, doblado CNC y rolado de acero, aluminio e inoxidable.</p>
+<span class="service-tag">Estructural</span>
+</div>
+<div class="service-card">
+<span class="service-icon">🎨</span>
+<h3>Acabados Premium</h3>
+<p>Pintura electrostática con horno, anodizado, pulido espejo y recubrimientos especiales.</p>
+<span class="service-tag">Estética</span>
+</div>
+<div class="service-card">
+<span class="service-icon">📐</span>
+<h3>Diseño Arquitectónico</h3>
+<p>Modelado 3D en SolidWorks, planos técnicos, renders fotorrealistas y prototipos funcionales.</p>
+<span class="service-tag">Diseño</span>
+</div>
+<div class="service-card">
+<span class="service-icon">🚛</span>
+<h3>Taller de Camiones</h3>
+<p>Mantenimiento preventivo/correctivo, motores, frenos, transmisión y diagnóstico computarizado.</p>
+<span class="service-tag">Taller Mecánico</span>
+</div>
+<div class="service-card">
+<span class="service-icon">🏗️</span>
+<h3>Alquiler Equipo Pesado</h3>
+<p>Retroexcavadoras, grúas, montacargas y equipo especializado para construcción e industria.</p>
+<span class="service-tag">Maquinaria</span>
+</div>
+</div>
+</section>
+<section id="proceso" class="reveal">
+<div class="section-title">
+<h2>📋 Nuestro <span>Proceso</span></h2>
+<p>Un flujo de trabajo optimizado para garantizar resultados excepcionales en cada proyecto.</p>
+</div>
+<div class="process-grid">
+<div class="process-step">
+<div class="step-num">1</div>
+<h3>Consulta</h3>
+<p>Analizamos tus necesidades y requisitos técnicos del proyecto.</p>
+</div>
+<div class="process-step">
+<div class="step-num">2</div>
+<h3>Diseño</h3>
+<p>Creamos planos, modelos 3D y prototipos para tu aprobación.</p>
+</div>
+<div class="process-step">
+<div class="step-num">3</div>
+<h3>Fabricación</h3>
+<p>Ejecutamos con precisión CNC y control de calidad riguroso.</p>
+</div>
+<div class="process-step">
+<div class="step-num">4</div>
+<h3>Entrega</h3>
+<p>Instalación profesional y garantía de satisfacción total.</p>
+</div>
+</div>
+</section>
+<section id="tarifas" class="reveal">
+<div class="section-title">
+<h2>💰 Tarifas <span>2026</span></h2>
+<p>Precios competitivos con la mejor calidad del mercado panameño.</p>
+</div>
+<div class="pricing-grid">
+<div class="price-card">
+<div class="price-icon">✂️</div>
+<h3>Corte Láser</h3>
+<div class="price">$325</div>
+<div class="price-note">Por proyecto base</div>
+<p class="price-desc">Corte de precisión en metales, acrílicos y maderas con tolerancias de ±0.1mm.</p>
+<a href="https://wa.me/50766862852?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20Corte%20L%C3%A1ser" class="btn btn-primary" target="_blank">Cotizar</a>
+</div>
+<div class="price-card">
+<div class="price-icon">🔄</div>
+<h3>Router CNC</h3>
+<div class="price">$250</div>
+<div class="price-note">Por proyecto base</div>
+<p class="price-desc">Fresado y tallado CNC de alta velocidad en múltiples materiales.</p>
+<a href="https://wa.me/50766862852?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20Router%20CNC" class="btn btn-primary" target="_blank">Cotizar</a>
+</div>
+<div class="price-card featured">
+<div class="price-icon">⚙️</div>
+<h3>Soldadura Especializada</h3>
+<div class="price">$450</div>
+<div class="price-note">Por proyecto base</div>
+<p class="price-desc">Soldadura TIG/MIG certificada AWS en acero, aluminio e inoxidable.</p>
+<a href="https://wa.me/50766862852?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20Soldadura" class="btn btn-primary" target="_blank">Cotizar</a>
+</div>
+<div class="price-card">
+<div class="price-icon">🔩</div>
+<h3>Doblado & Conformado</h3>
+<div class="price">$500</div>
+<div class="price-note">Por proyecto base</div>
+<p class="price-desc">Doblado CNC y rolado de láminas y perfiles metálicos.</p>
+<a href="https://wa.me/50766862852?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20Doblado" class="btn btn-primary" target="_blank">Cotizar</a>
+</div>
+<div class="price-card">
+<div class="price-icon">🎨</div>
+<h3>Pintura Electrostática</h3>
+<div class="price">$160</div>
+<div class="price-note">Por proyecto base</div>
+<p class="price-desc">Acabado premium con horno de curado, alta durabilidad y resistencia.</p>
+<a href="https://wa.me/50766862852?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20Pintura%20Electrost%C3%A1tica" class="btn btn-primary" target="_blank">Cotizar</a>
+</div>
+<div class="price-card featured">
+<div class="price-icon">📐</div>
+<h3>Diseño CAD/CAM</h3>
+<div class="price">$1,300</div>
+<div class="price-note">Por proyecto completo</div>
+<p class="price-desc">Modelado 3D, planos técnicos, renders fotorrealistas y prototipado.</p>
+<a href="https://wa.me/50766862852?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20Dise%C3%B1o%20CAD%2FCAM" class="btn btn-primary" target="_blank">Cotizar</a>
+</div>
+<div class="price-card">
+<div class="price-icon">🚛</div>
+<h3>Taller de Camiones</h3>
+<div class="price" style="font-size:1.4rem">Según necesidad</div>
+<div class="price-note">del cliente</div>
+<p class="price-desc">Mantenimiento preventivo/correctivo, motores, frenos y diagnóstico.</p>
+<a href="https://wa.me/50766862852?text=Hola%2C%20me%20interesa%20el%20Taller%20de%20Camiones" class="btn btn-primary" target="_blank">Cotizar</a>
+</div>
+<div class="price-card">
+<div class="price-icon">🏗️</div>
+<h3>Alquiler Equipo Pesado</h3>
+<div class="price" style="font-size:1.4rem">Según necesidad</div>
+<div class="price-note">del cliente</div>
+<p class="price-desc">Retroexcavadoras, grúas, montacargas y equipo de construcción.</p>
+<a href="https://wa.me/50766862852?text=Hola%2C%20me%20interesa%20el%20Alquiler%20de%20Equipo%20Pesado" class="btn btn-primary" target="_blank">Cotizar</a>
+</div>
+</div>
+</section>
+<section id="nosotros" class="reveal">
+<div class="section-title">
+<h2>🏢 Sobre <span>Nosotros</span></h2>
+<p>Más de 15 años transformando ideas en realidad con precisión y excelencia.</p>
+</div>
+<div class="about-content">
+<div class="about-text">
+<h3>ArquiTech Solutions</h3>
+<p>Somos líderes en manufactura de precisión en Panamá, ofreciendo soluciones integrales que combinan tecnología CNC de última generación con la experiencia artesanal de nuestro equipo.</p>
+<p>Desde nuestras instalaciones en Panamá, atendemos proyectos industriales, arquitectónicos y de construcción con los más altos estándares de calidad.</p>
+<div class="about-values">
+<div class="value-item"><span>🎯</span><div>Precisión<br>±0.1mm</div></div>
+<div class="value-item"><span>⚡</span><div>Rapidez<br>Entrega ágil</div></div>
+<div class="value-item"><span>🛡️</span><div>Garantía<br>100% calidad</div></div>
+<div class="value-item"><span>🤝</span><div>Compromiso<br>24/7 soporte</div></div>
+</div>
+</div>
+<div class="about-visual">
+<div class="about-card"><h4>🏭 Misión</h4><p>Proporcionar soluciones de manufactura de precisión que superen las expectativas de nuestros clientes mediante tecnología avanzada y servicio excepcional.</p></div>
+<div class="about-card"><h4>🌟 Visión</h4><p>Ser la empresa líder en manufactura de precisión y servicios integrales en Centroamérica, reconocida por nuestra innovación y excelencia.</p></div>
+<div class="about-card"><h4>💎 Valores</h4><p>Calidad, innovación, responsabilidad, trabajo en equipo y compromiso con la satisfacción total del cliente.</p></div>
+</div>
+</div>
+</section>
+<section id="equipo" class="reveal">
+<div class="section-title">
+<h2>👥 Nuestro <span>Equipo</span></h2>
+<p>Profesionales apasionados con amplia experiencia en manufactura e ingeniería.</p>
+</div>
+<div class="team-grid">
+<div class="team-card">
+<div class="team-avatar">👨‍💼</div>
+<h3>Director General</h3>
+<p class="role">CEO & Fundador</p>
+<p>Más de 15 años de experiencia en manufactura de precisión y gestión empresarial.</p>
+</div>
+<div class="team-card">
+<div class="team-avatar">👨‍🔧</div>
+<h3>Jefe de Producción</h3>
+<p class="role">Ing. Mecánico</p>
+<p>Especialista en procesos CNC, soldadura certificada AWS y control de calidad.</p>
+</div>
+<div class="team-card">
+<div class="team-avatar">👩‍💻</div>
+<h3>Diseñadora CAD/CAM</h3>
+<p class="role">Ing. Industrial</p>
+<p>Experta en SolidWorks, modelado 3D, renders fotorrealistas y prototipado.</p>
+</div>
+<div class="team-card">
+<div class="team-avatar">👨‍🔬</div>
+<h3>Técnico Senior</h3>
+<p class="role">Especialista CNC</p>
+<p>Operador certificado en máquinas de corte láser, plasma y router CNC.</p>
+</div>
+</div>
+</section>
+<section id="faq" class="reveal">
+<div class="section-title">
+<h2>❓ Preguntas <span>Frecuentes</span></h2>
+<p>Respuestas a las consultas más comunes sobre nuestros servicios.</p>
+</div>
+<div class="faq-list">
+<div class="faq-item">
+<div class="faq-q" onclick="this.parentElement.classList.toggle('active')">¿Cuáles son los tiempos de entrega? <span class="arrow">▼</span></div>
+<div class="faq-a">Los tiempos varían según la complejidad del proyecto. Proyectos estándar se entregan en 3-5 días hábiles. Proyectos complejos pueden tomar 1-3 semanas. Ofrecemos servicio express con recargo adicional.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="this.parentElement.classList.toggle('active')">¿Qué materiales trabajan? <span class="arrow">▼</span></div>
+<div class="faq-a">Trabajamos con acero al carbón, acero inoxidable, aluminio, cobre, bronce, acrílico, MDF, madera sólida, policarbonato y más. Consulta por materiales especiales.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="this.parentElement.classList.toggle('active')">¿Ofrecen garantía en sus trabajos? <span class="arrow">▼</span></div>
+<div class="faq-a">Sí, todos nuestros trabajos cuentan con garantía de calidad. Garantizamos las especificaciones técnicas acordadas y los acabados del producto final.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="this.parentElement.classList.toggle('active')">¿Realizan envíos a todo Panamá? <span class="arrow">▼</span></div>
+<div class="faq-a">Sí, realizamos envíos a todo el territorio nacional. También ofrecemos servicio de instalación en la zona metropolitana de Panamá.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="this.parentElement.classList.toggle('active')">¿Cómo solicito una cotización? <span class="arrow">▼</span></div>
+<div class="faq-a">Puedes contactarnos vía WhatsApp al +507 6686-2852, enviarnos tus planos o diseños y te daremos una cotización detallada en menos de 24 horas.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="this.parentElement.classList.toggle('active')">¿Trabajan con planos del cliente? <span class="arrow">▼</span></div>
+<div class="faq-a">Sí, trabajamos con tus planos existentes o podemos crear el diseño desde cero con nuestro equipo de diseño CAD/CAM en SolidWorks.</div>
+</div>
+</div>
+</section>
+<section id="ubicacion" class="reveal">
+<div class="section-title">
+<h2>📍 Nuestra <span>Ubicación</span></h2>
+<p>Visítanos en nuestras instalaciones en Panamá.</p>
+</div>
+<div class="location-content">
+<div class="location-info">
+<div class="loc-item">
+<div class="loc-icon">📍</div>
+<div><h4>Dirección</h4><p>Soho Mall, Ciudad de Panamá, Panamá</p></div>
+</div>
+<div class="loc-item">
+<div class="loc-icon">📱</div>
+<div><h4>WhatsApp</h4><p>+507 6686-2852</p></div>
+</div>
+<div class="loc-item">
+<div class="loc-icon">🕐</div>
+<div><h4>Horario</h4><p>Lunes a Viernes: 8:00 AM - 5:00 PM; Sábado: 8:00 AM - 12:00 PM</p></div>
+</div>
+<div class="loc-item">
+<div class="loc-icon">🛡️</div>
+<div><h4>Soporte</h4><p>Soporte técnico disponible 24/7 para emergencias y consultas urgentes.</p></div>
+</div>
+</div>
+<div class="map-container">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.5!2d-79.52!3d8.98!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMDAnMDAuMCJOIDc5wrAzMScwMC4wIlc!5e0!3m2!1ses!2spa!4v1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+</div>
+</section>
+<footer>
+<div class="footer-inner">
+<div class="footer-links">
+<a href="#servicios">Servicios</a>
+<a href="#proceso">Proceso</a>
+<a href="#tarifas">Tarifas</a>
+<a href="#nosotros">Nosotros</a>
+<a href="#equipo">Equipo</a>
+<a href="#faq">FAQ</a>
+<a href="#ubicacion">Ubicación</a>
+</div>
+<p>© 2026 ArquiTech Solutions — Manufactura de Precisión en Panamá. Todos los derechos reservados.</p>
+</div>
+</footer>
+<a href="https://wa.me/50766862852?text=Hola%20ArquiTech%2C%20estoy%20interesado%20en%20sus%20servicios.%20Quisiera%20solicitar%20una%20cotizaci%C3%B3n." class="fab" target="_blank" title="Cotizar por WhatsApp">💬</a>
+<script>
+window.addEventListener('load',()=>{const l=document.getElementById('loader');l.style.opacity='0';setTimeout(()=>l.style.display='none',500)});
+const counters=document.querySelectorAll('.stat-num');const animateCounter=(el)=>{const target=+el.dataset.target;const suffix=el.closest('.stat').querySelector('.stat-label').textContent.includes('%')?'%':el.closest('.stat').querySelector('.stat-label').textContent.includes('24/7')?'/7':'+';let current=0;const increment=target/60;const update=()=>{current+=increment;if(current<target){el.textContent=Math.ceil(current)+(suffix==='%'?'':suffix==='+'?'+':'');requestAnimationFrame(update)}else{el.textContent=target+(suffix==='%'?'%':suffix==='/7'?'/7':'+')}};update()};
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');if(e.target.querySelector('.stat-num')){e.target.querySelectorAll('.stat-num').forEach(animateCounter)}}})},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+document.querySelectorAll('.stats').forEach(el=>observer.observe(el));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.nav-links').classList.remove('open')));
+</script>
+</body>
+</html>
